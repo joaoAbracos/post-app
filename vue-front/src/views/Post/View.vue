@@ -1,39 +1,41 @@
 <template>
   <div class="main-div">
     <div class="main-add-post">
-      <RouterLink to="/posts/create"
-        ><font-awesome-icon :icon="['fas', 'plus']" />Add post</RouterLink
-      >
+      <RouterLink to="/posts/create"> Add Post </RouterLink>
     </div>
     <div class="posts-div" v-if="this.posts.length > 0">
       <div class="post" v-for="(post, index) in posts" :key="index">
         <div class="post-header">
           <h2 class="post-title">{{ post.title }}</h2>
-          <p class="post-type">{{ post.type }}</p>
+          <div class="post-footer">
+            <RouterLink :to="'/posts/create/' + post.id">
+              <font-awesome-icon :icon="['fas', 'edit']" />
+            </RouterLink>
+            <button type="button" @click="deletePost(post.id)">
+              <font-awesome-icon :icon="['fas', 'trash-alt']" />
+            </button>
+          </div>
+          
         </div>
         <p class="post-body">{{ post.body }}</p>
-        <div class="post-footer">
-          <RouterLink :to="'/posts/create/' + post.id">
-            <font-awesome-icon :icon="['fas', 'edit']" />
-          </RouterLink>
-          <button type="button" @click="deletePost(post.id)">
-            <font-awesome-icon :icon="['fas', 'trash-alt']" />
-          </button>
-        </div>
+        <p class="post-type">{{ post.type }}</p>
         <div class="comments-toggle" v-if="post.comments.length > 0">
           <button
             type="button"
             @click="showComments[index] = !showComments[index]"
             v-bind:class="{
-              'comment-toggle': true
+              'comment-toggle': true,
             }"
           >
-          <font-awesome-icon v-if="showComments[index]" :icon="['fas', 'arrow-up']" />
-      <font-awesome-icon v-else :icon="['fas', 'arrow-down']" />
-             </button>
+            <font-awesome-icon
+              v-if="showComments[index]"
+              :icon="['fas', 'arrow-up']"
+            />
+            <font-awesome-icon v-else :icon="['fas', 'arrow-down']" />
+          </button>
         </div>
 
-        <div v-if="showComments[index]">
+        <div class="main-comments" v-if="showComments[index]">
           <div
             v-for="(comment, index2) in post.comments"
             :key="index2"
@@ -68,18 +70,15 @@
   justify-content: flex-end;
 }
 .main-add-post a {
-  background-color: #fff;
-  padding: 5px;
-  margin: 10px 15px 10px;
-  width: 20%;
-  text-align: center;
-  color: black;
+  font-weight: 600;
+  background-color: #3beb55;
+  border-radius: 50px;
+  padding: 15px;
+  margin: 10px;
   text-decoration: none;
-  border-radius: 8px;
 }
 .main-add-post a:hover {
-  background-color: rgb(236, 150, 38);
-  color: #fff;
+  transform: scale(1.1);
 }
 .posts-div {
   overflow-y: auto;
@@ -111,10 +110,11 @@
 
 .post-type {
   margin: 0;
-  border-radius: 20px;
+  border-radius: 3px;
   color: #fff;
   padding: 5px 10px;
   background-color: rgb(236, 150, 38);
+  width: fit-content;
 }
 
 .post-body {
@@ -132,22 +132,25 @@
   border-radius: 20px;
   padding: 8px 16px;
   margin-left: 8px;
-  color: #fff;
+  color: black;
   text-transform: uppercase;
 }
 
 .post-footer a {
-  border-radius: 20px;
-  padding: 8px 16px;
-  margin-left: 8px;
-  color: #fff;
-  text-transform: uppercase;
-  background-color: green;
-  text-decoration: none;
+    padding: 8px 16px;
+    margin-left: 8px;
+    font-size: larger;
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
 }
-
-.post-footer button[type="button"] {
-  background-color: red;
+.post-footer a:hover{
+  color: #3beb55;
+  transform: scale(1.1);
+}
+.post-footer button[type="button"]:hover {
+  color: red;
 }
 .comments-toggle {
   display: flex;
@@ -174,10 +177,11 @@
   border: 1px solid #ccc;
   padding: 10px;
 }
-
-.comment {
-  margin-bottom: 10px;
+.main-comments{
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.5);
+}
+.comment {
+  margin: 8px 0;
   padding: 5px;
   border-radius: 3px;
 }
