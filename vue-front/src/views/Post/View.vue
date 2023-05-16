@@ -50,11 +50,52 @@
       </div>
     </div>
     <div v-else>
-      <h1>Loading</h1>
+      <div class="spinner"></div>
     </div>
   </div>
 </template>
 <style>
+.spinner {
+  margin: 50px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  text-align: center;
+  animation: rotate 2s infinite linear;
+}
+
+.spinner:before {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 4px solid #ccc;
+  border-color: #ccc transparent #ccc transparent;
+  animation: spin 1.5s infinite ease-in-out;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  50% {
+    transform: rotate(180deg);
+    border-color: #888 transparent #888 transparent;
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .main-div {
   width: 100%;
 }
