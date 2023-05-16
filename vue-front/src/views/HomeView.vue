@@ -27,13 +27,13 @@ main {
   
 }
 
-h1 {
+.container h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
 
-button {
+ button {
   background-color: #FFFFFF;
   color: #336699;
   border: none;
@@ -45,11 +45,11 @@ button {
   font-weight: 600;
   
 }
-button a{
+.container button a{
   text-decoration: none;
 }
 
-button:hover {
+.container  button:hover {
   transform: scale(1.1);
 }
 </style>

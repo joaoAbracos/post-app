@@ -1,28 +1,28 @@
 <template>
   <div class="edit-posts">
     <div class="main-posts">
-        <h1>{{ pageTitle }}</h1>
-      <div>
-        <h4>Title</h4>
-        <input type="text" v-model="model.post.title" />
+      <div class="main-title">
+        <h2>{{ pageTitle }}</h2>
       </div>
-      <div>
-        <h4>Body</h4>
-        <input type="text" v-model="model.post.body" />
-      </div>
-      <div>
-        <h4>Type</h4>
-        <input type="text" v-model="model.post.type" />
+      <div class="main-content">
+        <div>
+          <h4>Title</h4>
+          <input type="text" v-model="model.post.title" />
+        </div>
+        <div>
+          <h4>Body</h4>
+          <input type="text" v-model="model.post.body" />
+        </div>
+        <div>
+          <h4>Type</h4>
+          <input type="text" v-model="model.post.type" />
+        </div>
       </div>
       <button type="button" @click="savePost">Add</button>
     </div>
     <div class="main-errors">
-      <div  class="errors" v-if="Object.keys(this.errorList).length > 0">
-        <div
-         
-          v-for="(error, index) in this.errorList"
-          :key="index"
-        >
+      <div class="errors" v-if="Object.keys(this.errorList).length > 0">
+        <div v-for="(error, index) in this.errorList" :key="index">
           <div class="errors-div" v-for="(error, index) in error" :key="index">
             <li>{{ error }}</li>
           </div>
@@ -32,9 +32,9 @@
   </div>
 </template>
 
- <style>
+<style>
 .edit-posts {
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -45,10 +45,16 @@
   padding: 15px;
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.5);
   background-color: #fff;
-
+  border-radius: 8px;
 }
-.main-errors{
-    display: flex;
+.main-title h2 {
+  text-align: center;
+}
+.main-content h4{
+  margin : 5px 0;
+}
+.main-errors {
+  display: flex;
 }
 .errors {
   margin: 15px;
@@ -58,10 +64,10 @@
   left: 0;
   right: 0;
   margin-left: auto;
-    margin-right: auto;
-    width: 450px;
+  margin-right: auto;
+  width: 450px;
 }
-.errors-div  li {
+.errors-div li {
   color: #fff;
   padding: 5px;
   font-size: 16px;
@@ -86,8 +92,13 @@
   border-radius: 4px;
   cursor: pointer;
   width: 100%;
-}
 
+}
+.edit-posts button[type="button"]:hover {
+  background-color: #0d771d;
+  
+
+}
 /* Style error messages */
 .edit-posts ul {
   list-style-type: none;
@@ -95,27 +106,25 @@
   padding: 0;
 }
 
-
 /* Responsive styles for small screens */
 @media screen and (max-width: 600px) {
-    .edit-posts input[type="text"],
-    .edit-posts button[type="button"] {
+  .edit-posts input[type="text"],
+  .edit-posts button[type="button"] {
     width: 100%;
   }
 }
 @media (max-width: 600px) {
   .errors {
-   width:358px 
+    width: 358px;
   }
 }
 @media (max-width: 300px) {
   .errors {
-   width:200px 
+    width: 200px;
   }
 }
-</style> -->
+</style>
 <script>
-
 import axios from "axios";
 export default {
   name: "postCreate",
@@ -179,7 +188,7 @@ export default {
             type: "",
           };
           this.errorList = "";
-          this.$router.push('/posts') 
+          this.$router.push("/posts");
         })
         .catch((errors) => {
           this.errorList = errors.response.data.errors;
